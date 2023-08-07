@@ -8,7 +8,10 @@ class LoginPageTest(BaseTest):
     def test_new_user_sign_up(self):
         self.login_page.open_login_page()
         self.login_page.click_on_sign_up_button()
-        # ToDO: select account type
+
+        # ToDo:check if this method works
+        self.login_page.click_on_account_type_individual()
+
         self.new_user_signup_page.enter_into_user_first_name_field('Eugene')
         self.new_user_signup_page.enter_into_user_last_name_field('Sydorenko')
         self.new_user_signup_page.enter_into_user_name_field('Eugene')

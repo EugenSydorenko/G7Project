@@ -35,6 +35,7 @@ class CommonActionsWithElements:
 
     def _is_element_displayed(self, web_element: WebElement) -> bool:
         try:
+            self.web_driver_wait_10.until(EC.element_to_be_clickable(web_element))
             state = web_element.is_displayed()
             if state:
                 message = self.__get_element_name(web_element) + ' Element is displayed'

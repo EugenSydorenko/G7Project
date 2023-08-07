@@ -13,6 +13,7 @@ class LoginPage(ParentPage):
         self.input_password_field = By.ID, 'validationCustom03'
         self.login_button = By.ID, 'buttonLogin'
         self.sign_up_button = By.ID, 'signUpLink'
+        self.account_type_individual = By.ID, 'signUpLink'
         self.email_verification_message = By.XPATH, ('//p[text()="An account verification email is sent to you. Kindly '
                                                      'verify your account"]')
 
@@ -31,6 +32,10 @@ class LoginPage(ParentPage):
     def __button_sign_up_element(self) -> WebElement:
         button_sign_up: WebElement = self.web_driver.find_element(*self.sign_up_button)
         return button_sign_up
+
+    def __account_type_individual(self) -> WebElement:
+        account_type_individual: WebElement = self.web_driver.find_element(*self.account_type_individual)
+        return account_type_individual
 
     def __email_verification_message_element(self) -> WebElement:
         email_verification_message: WebElement = self.web_driver.find_element(*self.email_verification_message)
@@ -60,6 +65,10 @@ class LoginPage(ParentPage):
     def click_on_sign_up_button(self):
         sign_up_button: WebElement = self.__button_sign_up_element()
         self._click_on_element(sign_up_button)
+
+    def click_on_account_type_individual(self):
+        account_type_individual: WebElement = self.__account_type_individual()
+        self._click_on_element(account_type_individual)
 
     # why is this here ??
     def is_email_verification_message_displayed(self) -> bool:
