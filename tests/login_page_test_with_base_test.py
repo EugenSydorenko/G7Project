@@ -1,10 +1,18 @@
 from datetime import datetime
 
-
 from tests.base_test import BaseTest
 
 
 class LoginPageTest(BaseTest):
+
+    def test_valid_login(self):
+        self.login_page.open_login_page()
+        self.login_page.enter_text_into_login_field(self.valid_user_email)
+        self.login_page.enter_text_into_password_field(self.user_password)
+        self.login_page.click_on_button_login()
+
+        assert self.dashboard_page.is_button_log_out_displayed(), 'Button is not displayed'
+
     def test_new_user_sign_up(self):
         self.login_page.open_login_page()
         self.login_page.click_on_sign_up_button()
@@ -21,14 +29,6 @@ class LoginPageTest(BaseTest):
         self.new_user_signup_page.click_on_button_sign_up()
 
         assert self.login_page.is_email_verification_message_displayed(), 'Message is not displayed'
-
-    def test_valid_login(self):
-        self.login_page.open_login_page()
-        self.login_page.enter_text_into_login_field(self.valid_user_email)
-        self.login_page.enter_text_into_password_field(self.user_password)
-        self.login_page.click_on_button_login()
-
-        assert self.dashboard_page.is_button_log_out_displayed(), 'Button is not displayed'
 
     def test_new_node_deploying(self):
         current_date_time = datetime.now()
