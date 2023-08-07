@@ -4,11 +4,13 @@ from selenium.webdriver.remote.webelement import WebElement
 from pages.parent_page import ParentPage
 from selenium.webdriver.support import expected_conditions as EC
 
+
 class Dashboard(ParentPage):
+    button_log_out = By.ID, 'Logout'
+    button_add_node = By.ID, 'buttonAddNode'
+
     def __init__(self, web_driver):
         super().__init__(web_driver)
-        self.button_log_out = By.ID, 'Logout'
-        self.button_add_node = By.ID, 'buttonAddNode'
 
     def __button_logout_element(self) -> WebElement:
         self.web_driver_wait_15.until(EC.element_to_be_clickable(self.web_driver.find_element(*self.button_log_out)))

@@ -1,10 +1,12 @@
 from selenium.webdriver.remote.webdriver import WebDriver
-
+import os
+from dotenv import load_dotenv
 from pages.common_actions_with_elements import CommonActionsWithElements
 
 
 class ParentPage(CommonActionsWithElements):
-    base_url = "https://platform.dev.edgevana.com"
+    load_dotenv()
+    base_url = os.environ.get('BASE_URL')
 
     def __init__(self, web_driver: WebDriver):
         self.web_driver = web_driver

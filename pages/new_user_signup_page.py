@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -8,16 +10,16 @@ import random
 class NewUserSignUpPage(ParentPage):
     error_message_for_existing_email = "//p[@class='error-message' and text()='User already exists with this email address']"
     error_message_for_existing_user_name = "//p[@class='error-message' and text()='Username is already taken']"
+    user_first_name_field = By.ID, '1'
+    user_last_name_field = By.ID, '2'
+    user_user_name_field = By.ID, '3'
+    user_email_field = By.ID, '4'
+    user_password_field = By.ID, '5'
+    user_confirm_password_field = By.ID, '6'
+    button_sign_up = By.ID, 'buttonSignUp'
 
     def __init__(self, web_driver):
         super().__init__(web_driver)
-        self.user_first_name_field = By.ID, '1'
-        self.user_last_name_field = By.ID, '2'
-        self.user_user_name_field = By.ID, '3'
-        self.user_email_field = By.ID, '4'
-        self.user_password_field = By.ID, '5'
-        self.user_confirm_password_field = By.ID, '6'
-        self.button_sign_up = By.ID, 'buttonSignUp'
 
     def __user_first_name_field_element(self) -> WebElement:
         element: WebElement = self.web_driver.find_element(*self.user_first_name_field)
@@ -36,7 +38,7 @@ class NewUserSignUpPage(ParentPage):
         return element
 
     def __input_user_password_element(self) -> WebElement:
-        element: WebElement = self.web_driver.find_element(*self.user_email_field)
+        element: WebElement = self.web_driver.find_element(*self.user_password_field)
         return element
 
     def __input_user_confirm_password_element(self) -> WebElement:
@@ -67,7 +69,7 @@ class NewUserSignUpPage(ParentPage):
                 self.__input_user_user_name_element().send_keys(user_name)
                 error_exists = self.__check_error_message(self.error_message_for_existing_user_name)
                 if error_exists:
-                    print('User already exists with this user name: ' + user_name)
+                    self.logger.info('User already exists with this user name: ' + user_name)
 
     def enter_into_user_email_field(self, email):
         user_email_field: WebElement = self.__user_email_element()
@@ -81,15 +83,10 @@ class NewUserSignUpPage(ParentPage):
                 modified_email = self.__add_random_number(email_parts[0]) + "@" + email_parts[1]
                 self.__user_email_element().clear()
                 self.__user_email_element().send_keys(modified_email)
-                try:
-                    # Delay for 2 seconds (adjust as needed)
-                    self.web_driver.implicitly_wait(2)
-                except Exception as e:
-                    # Handle the exception if necessary
-                    pass
+                time.sleep(4)
                 error_exists = self.__check_error_message(self.error_message_for_existing_email)
                 if error_exists:
-                    print("User already exists with this email address: " + modified_email)
+                    self.logger.info("User already exists with this email address: " + modified_email)
                 email_parts = modified_email.split("@")
 
     def __check_error_message(self, error_message_xpath):

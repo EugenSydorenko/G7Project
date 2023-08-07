@@ -5,14 +5,15 @@ from pages.parent_page import ParentPage
 
 
 class NodeDeployment(ParentPage):
+    button_deploy_now = By.ID, 'buttonDeployNow'
+    button_proceed = By.ID, 'buttonProceed'
+    node_name_field = By.ID, 'formHorizontalNodeName'
+    ssh_key_field = By.ID, 'formHorizontalEmail'
+    promo_code_field = By.ID, 'formHorizontalPassword'
+    terms_conditions_checkbox = By.ID, 'formHorizontalCheck'
+
     def __init__(self, web_driver):
         super().__init__(web_driver)
-        self.button_deploy_now = By.ID, 'buttonDeployNow'
-        self.button_proceed = By.ID, 'buttonProceed'
-        self.node_name_field = By.ID, 'formHorizontalNodeName'
-        self.ssh_key_field = By.ID, 'formHorizontalEmail'
-        self.promo_code_field = By.ID, 'formHorizontalPassword'
-        self.terms_conditions_checkbox = By.ID, 'formHorizontalCheck'
 
     def __button_deploy_now_element(self) -> WebElement:
         button_deploy_now_element: WebElement = self.web_driver.find_element(*self.button_deploy_now)

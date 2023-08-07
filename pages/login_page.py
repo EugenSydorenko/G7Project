@@ -6,16 +6,18 @@ from pages.parent_page import ParentPage
 
 
 class LoginPage(ParentPage):
+    input_user_name_field = By.ID, 'validationCustom02'
+    input_password_field = By.ID, 'validationCustom03'
+    login_button = By.ID, 'buttonLogin'
+    sign_up_button = By.ID, 'signUpLink'
+    account_type_individual = By.XPATH, "//p[@class='head' and text()='Individual']"
+    button_get_started = By.ID, 'buttonGetStarted'
+    email_verification_message = By.XPATH, ('//p[contains(@class, "head") and contains(text(), "Please verify your '
+                                            'email!")]')
+
     def __init__(self, web_driver):
         super().__init__(web_driver)
         self.login_page_url = self.base_url + "/login"
-        self.input_user_name_field = By.ID, 'validationCustom02'
-        self.input_password_field = By.ID, 'validationCustom03'
-        self.login_button = By.ID, 'buttonLogin'
-        self.sign_up_button = By.ID, 'signUpLink'
-        self.account_type_individual = By.ID, 'signUpLink'
-        self.email_verification_message = By.XPATH, ('//p[text()="An account verification email is sent to you. Kindly '
-                                                     'verify your account"]')
 
     def __input_user_name_field_element(self) -> WebElement:
         web_element: WebElement = self.web_driver.find_element(*self.input_user_name_field)
@@ -41,13 +43,17 @@ class LoginPage(ParentPage):
         email_verification_message: WebElement = self.web_driver.find_element(*self.email_verification_message)
         return email_verification_message
 
+    def __button_get_started_element(self) -> WebElement:
+        button_get_started: WebElement = self.web_driver.find_element(*self.button_get_started)
+        return button_get_started
+
     def open_login_page(self):
         try:
             self.web_driver.get(self.login_page_url)
-            print('\nLoginPage was opened')
-            print(self.login_page_url)
+            self.logger.info('\nLoginPage was opened')
+            self.logger.info(self.login_page_url)
         except Exception as e:
-            print('Can not open Login page', e)
+            self.logger.error('Can not open Login page', e)
             assert False, 'Can not open Login page' + str(e)
 
     def enter_text_into_login_field(self, user_name: str):
@@ -70,8 +76,12 @@ class LoginPage(ParentPage):
         account_type_individual: WebElement = self.__account_type_individual()
         self._click_on_element(account_type_individual)
 
+    def click_on_button_get_started(self):
+        button_get_started: WebElement = self.__button_get_started_element()
+        self._click_on_element(button_get_started)
+
     # why is this here ??
     def is_email_verification_message_displayed(self) -> bool:
         self.web_driver.implicitly_wait(2)
-        email_verification_message: WebElement = self.email_verification_message
+        email_verification_message: WebElement = self.web_driver.find_element(*self.email_verification_message)
         return self._is_element_displayed(email_verification_message)

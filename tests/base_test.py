@@ -13,6 +13,13 @@ import logging
 
 
 class BaseTest(unittest.TestCase):
+    load_dotenv()
+    user_email = os.environ.get('USER_EMAIL')
+    valid_user_email = os.environ.get('USER_EMAIL_VALID')
+    user_password = os.environ.get('USER_PASSWORD')
+    test_ssh_key = os.environ.get('SSH_KEY')
+    promo_code = os.environ.get('PROMO_CODE')
+
     def setUp(self):
         self.logger = logging.getLogger(__name__)
         self.testName = self._testMethodName
@@ -25,13 +32,6 @@ class BaseTest(unittest.TestCase):
         self.new_user_signup_page = new_user_signup_page.NewUserSignUpPage(self.web_driver)
         self.marketplace_page = marketplace_page.Marketplace(self.web_driver)
         self.node_deployment_page = node_deployment_page.NodeDeployment(self.web_driver)
-
-        load_dotenv()
-        self.user_email=os.environ.get('USER_EMAIL')
-        self.valid_user_email=os.environ.get('USER_EMAIL_VALID')
-        self.user_password=os.environ.get('USER_PASSWORD')
-        self.test_ssh_key=os.environ.get('SSH_KEY')
-        self.promo_code=os.environ.get('PROMOCODE')
 
     def tearDown(self):
         self.web_driver.quit()

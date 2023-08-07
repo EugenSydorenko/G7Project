@@ -1,9 +1,10 @@
+import logging
+
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
 
 
 class CommonActionsWithElements:
@@ -11,10 +12,11 @@ class CommonActionsWithElements:
         self.web_driver = web_driver
         self.web_driver_wait_10 = WebDriverWait(self.web_driver, 10)
         self.web_driver_wait_15 = WebDriverWait(self.web_driver, 15)
+        self.logger = logging.getLogger(__name__)
 
     @staticmethod
     def __print_error_and_stop_test(e):
-        print('Can not work with element', e)
+        logging.error('Can not work with element', e)
         assert False, 'Can not work with element ' + str(e)
 
     @staticmethod
@@ -41,10 +43,10 @@ class CommonActionsWithElements:
                 message = self.__get_element_name(web_element) + ' Element is displayed'
             else:
                 message = self.__get_element_name(web_element) + ' Element is not displayed'
-            print(message)
+            self.logger.info(message)
             return state
         except Exception:
-            print('Element is not displayed')
+            self.logger.error('Element is not displayed')
             return False
 
     def _click_on_element(self, xpath: str):
@@ -59,7 +61,7 @@ class CommonActionsWithElements:
             self.web_driver_wait_10.until(EC.element_to_be_clickable(web_element))
             name = self.__get_element_name(web_element)
             web_element.click()
-            print(name + ' Element was clicked')
+            self.logger.info(name + ' Element was clicked')
         except Exception as e:
             self.__print_error_and_stop_test(e)
 
@@ -68,7 +70,7 @@ class CommonActionsWithElements:
             self.web_driver_wait_15.until(EC.visibility_of(web_element))
             web_element.clear()
             web_element.send_keys(text)
-            print(text + ' was inputted into element ' + self.__get_element_name(web_element))
+            self.logger.info(text + ' was inputted into element ' + self.__get_element_name(web_element))
         except Exception as e:
             self.__print_error_and_stop_test(e)
 

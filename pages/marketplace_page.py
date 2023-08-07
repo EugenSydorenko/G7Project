@@ -5,9 +5,10 @@ from pages.parent_page import ParentPage
 
 
 class Marketplace(ParentPage):
+    deploy_solana_node = By.XPATH, "//a[@href='/server-deployment/5']"
+
     def __init__(self, web_driver):
         super().__init__(web_driver)
-        self.deploy_solana_node = By.XPATH, "//a[@href='/server-deployment/5']"
 
     def __deploy_solana_node_element(self) -> WebElement:
         element: WebElement = self.web_driver.find_element(*self.deploy_solana_node)
