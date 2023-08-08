@@ -16,7 +16,7 @@ class CommonActionsWithElements:
 
     @staticmethod
     def __print_error_and_stop_test(e):
-        logging.error('Can not work with element', e)
+        print('Can not work with element', e)
         assert False, 'Can not work with element ' + str(e)
 
     @staticmethod
@@ -27,13 +27,9 @@ class CommonActionsWithElements:
         except Exception:
             return ''
 
-    # def find_element_safely(self, locator) -> WebElement:
-    #     locator_type = locator[0]
-    #     locator_value = locator[1]
-    #     try:
-    #         return self.web_driver.find_element(*locator)
-    #     except NoSuchElementException:
-    #         raise AssertionError(f"Element with locator {locator_type}='{locator_value}' not found on the page.")
+    def find_element_with_waiting(self, locator: tuple) -> WebElement:
+        web_element = self.web_driver_wait_10.until(EC.visibility_of_element_located(locator))
+        return web_element
 
     def _is_element_displayed(self, web_element: WebElement) -> bool:
         try:
@@ -58,6 +54,8 @@ class CommonActionsWithElements:
 
     def _click_on_element(self, web_element: WebElement):
         try:
+            loader_selector = (By.CSS_SELECTOR, "div.Loader-main")
+            self.web_driver_wait_10.until(EC.invisibility_of_element_located(loader_selector))
             self.web_driver_wait_10.until(EC.element_to_be_clickable(web_element))
             name = self.__get_element_name(web_element)
             web_element.click()

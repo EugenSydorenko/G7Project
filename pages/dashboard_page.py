@@ -1,3 +1,6 @@
+import time
+
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -17,12 +20,34 @@ class Dashboard(ParentPage):
         return self.web_driver.find_element(*self.button_log_out)
 
     def __button_add_node_element(self) -> WebElement:
-        return self.web_driver.find_element(*self.button_add_node)
+        web_element: WebElement = self.find_element_with_waiting(self.button_add_node)
+        return web_element
 
     def is_button_log_out_displayed(self) -> bool:
         button_log_out: WebElement = self.__button_logout_element()
         return self._is_element_displayed(button_log_out)
 
     def click_on_button_add_node(self):
-        button_add_node: WebElement = self.__button_add_node_element()
-        self._click_on_element(button_add_node)
+        try:
+            button_add_node: WebElement = self.__button_add_node_element()
+            time.sleep(6)
+            self._click_on_element(button_add_node)
+        except TimeoutException:
+            # Button doesn't exist, we were redirected to marketplace, do nothing
+            pass
+
+    def wait_for_end_of_deployment(self):
+        max_wait_time = 1200
+        button_text = 'Tour de Sun'
+        start_time = time.time()
+
+        while time.time() - start_time < max_wait_time:
+            try:
+                self.web_driver_wait_10.until(
+                    EC.presence_of_element_located((By.XPATH, f"//div[contains(text(), '{button_text}')]")))
+                return True  # Element with text found
+            except:
+                pass
+            time.sleep(10)  # Wait for 10 seconds before checking again
+
+        return False  # Element with text not found within the time limit

@@ -11,6 +11,7 @@ class NodeDeployment(ParentPage):
     ssh_key_field = By.ID, 'formHorizontalEmail'
     promo_code_field = By.ID, 'formHorizontalPassword'
     terms_conditions_checkbox = By.ID, 'formHorizontalCheck'
+    button_submit_payment = By.XPATH, "//button[contains(text(), 'Submit Payment')]"
 
     def __init__(self, web_driver):
         super().__init__(web_driver)
@@ -18,6 +19,10 @@ class NodeDeployment(ParentPage):
     def __button_deploy_now_element(self) -> WebElement:
         button_deploy_now_element: WebElement = self.web_driver.find_element(*self.button_deploy_now)
         return button_deploy_now_element
+
+    def __button_submit_payment(self) -> WebElement:
+        button_submit_payment_element: WebElement = self.web_driver.find_element(*self.button_submit_payment)
+        return button_submit_payment_element
 
     def __button_proceed_element(self) -> WebElement:
         element: WebElement = self.web_driver.find_element(*self.button_proceed)
@@ -50,6 +55,10 @@ class NodeDeployment(ParentPage):
     def click_terms_and_conditions_checkbox(self):
         terms_and_condition_checkbox: WebElement = self.__terms_of_service_and_conditions_checkbox_element()
         self._click_on_element(terms_and_condition_checkbox)
+
+    def click_on_button_submit_payment(self):
+        button_submit_payment: WebElement = self.__button_submit_payment()
+        self._click_on_element(button_submit_payment)
 
     def enter_node_name_into_node_name_field(self, node_name):
         node_name_field: WebElement = self.__node_name_field_element()

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from api.core_api import CoreApi
 from tests.base_test import BaseTest
 
 
@@ -30,9 +31,13 @@ class LoginPageTest(BaseTest):
         assert self.login_page.is_email_verification_message_displayed(), 'Message is not displayed'
 
     def test_new_node_deploying(self):
+
+        core_api = CoreApi()
+        assert core_api.check_inventory_for_available_nodes(), 'Cant test without free nodes'
+
         current_date_time = datetime.now()
         current_date_time = current_date_time.strftime('%Y-%m-%d %H:%M:%S')
-        
+
         self.login_page.open_login_page()
         self.login_page.enter_text_into_login_field(self.valid_user_email)
         self.login_page.enter_text_into_password_field(self.user_password)
@@ -41,28 +46,16 @@ class LoginPageTest(BaseTest):
         self.dashboard_page.click_on_button_add_node()
         self.marketplace_page.click_on_solana_node_deploy_now()
 
-        # ToDo: add waiting for node location to appear
+        # ToDo: maybe add waiting for node location to appear
 
         self.node_deployment_page.click_on_button_deploy_now()
         self.node_deployment_page.enter_node_name_into_node_name_field(current_date_time)
         self.node_deployment_page.enter_ssh_key_into_ssh_key_field(self.test_ssh_key)
-
-        # self.node_deployment_page.enter_promo_code_into_promo_code_field(self.promo_code)
-
         self.node_deployment_page.click_terms_and_conditions_checkbox()
-        # ToDo: add checking if promo code worked
         self.node_deployment_page.click_on_button_proceed()
 
-        # ToDo: check if price is correct
-        # ToDo: click on proceed payment
-        # ToDo: wait for deployment to finish
-        # ToDo: check for successful deployment
+        self.node_deployment_page.click_on_button_submit_payment()
 
-        # Add the rest of the test steps related to node buying here
-        assert True
+        assert self.dashboard_page.wait_for_end_of_deployment(), 'Deployment failed'
 
     # ToDo: think about different types of nodes and agent checkup
-
-
-    # agent api tests
-    # https://edgevana.atlassian.net/wiki/spaces/ETD/pages/438992897/Proposal+for+Transitioning+to+Microservices+Architecture#Agent.1
