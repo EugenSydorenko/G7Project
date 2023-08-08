@@ -16,8 +16,6 @@ class LoginPageTest(BaseTest):
     def test_new_user_sign_up(self):
         self.login_page.open_login_page()
         self.login_page.click_on_sign_up_button()
-
-        # ToDo:check if this method works
         self.login_page.click_on_account_type_individual()
         self.login_page.click_on_button_get_started()
 
@@ -34,7 +32,7 @@ class LoginPageTest(BaseTest):
     def test_new_node_deploying(self):
         current_date_time = datetime.now()
         current_date_time = current_date_time.strftime('%Y-%m-%d %H:%M:%S')
-
+        
         self.login_page.open_login_page()
         self.login_page.enter_text_into_login_field(self.valid_user_email)
         self.login_page.enter_text_into_password_field(self.user_password)
