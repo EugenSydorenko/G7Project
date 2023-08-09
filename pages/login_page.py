@@ -79,8 +79,6 @@ class LoginPage(ParentPage):
         button_get_started: WebElement = self.__button_get_started_element()
         self._click_on_element(button_get_started)
 
-    # why is this here ??
     def is_email_verification_message_displayed(self) -> bool:
-        self.web_driver.implicitly_wait(2)
-        email_verification_message: WebElement = self.web_driver.find_element(*self.email_verification_message)
+        email_verification_message: WebElement = self.find_element_with_waiting(self.email_verification_message)
         return self._is_element_displayed(email_verification_message)
