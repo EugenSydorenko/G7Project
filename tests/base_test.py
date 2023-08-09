@@ -1,15 +1,16 @@
-import unittest
+import logging
 import os
+import unittest
+
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium.webdriver.safari.options import Options as SafariOptions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from pages import login_page, dashboard_page, new_user_signup_page, marketplace_page, node_deployment_page
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.safari.options import Options as SafariOptions
 
-import logging
+from pages import login_page, dashboard_page, new_user_signup_page, marketplace_page, node_deployment_page
 
 
 class BaseTest(unittest.TestCase):

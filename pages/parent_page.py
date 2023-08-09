@@ -1,6 +1,8 @@
-from selenium.webdriver.remote.webdriver import WebDriver
 import os
+
 from dotenv import load_dotenv
+from selenium.webdriver.remote.webdriver import WebDriver
+
 from pages.common_actions_with_elements import CommonActionsWithElements
 
 

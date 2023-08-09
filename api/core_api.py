@@ -1,6 +1,5 @@
 import os
 
-import requests
 from dotenv import load_dotenv
 
 from api.common_actions_with_api import CommonActionsWithApi
@@ -22,5 +21,5 @@ class CoreApi(CommonActionsWithApi):
             print('There is no free nodes')
             return False
         else:
-            print(response) #for testing
+            print(response)  # for testing
             return True

@@ -3,9 +3,9 @@ import time
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
 
 from pages.parent_page import ParentPage
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class Dashboard(ParentPage):

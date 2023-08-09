@@ -31,7 +31,6 @@ class LoginPageTest(BaseTest):
         assert self.login_page.is_email_verification_message_displayed(), 'Message is not displayed'
 
     def test_new_node_deploying(self):
-
         core_api = CoreApi()
         assert core_api.check_inventory_for_available_nodes(), 'Cant test without free nodes'
 

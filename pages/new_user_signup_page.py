@@ -1,10 +1,10 @@
+import random
 import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
 from pages.parent_page import ParentPage
-import random
 
 
 class NewUserSignUpPage(ParentPage):
