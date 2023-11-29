@@ -26,6 +26,3 @@ class MarketplaceApiTests(unittest.TestCase):
 
     def test_agent_action_ufw_status(self):
         assert self.marketplace_api.send_agent_action('ufw_status')
-
-    # todo agent api tests:
-    # https://edgevana.atlassian.net/wiki/spaces/ETD/pages/438992897/Proposal+for+Transitioning+to+Microservices+Architecture#Agent.1

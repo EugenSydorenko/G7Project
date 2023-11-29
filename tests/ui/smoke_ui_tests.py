@@ -58,3 +58,4 @@ class LoginPageTest(BaseTest):
         assert self.dashboard_page.wait_for_end_of_deployment(), 'Deployment failed'
 
     # ToDo: think about different types of nodes and agent checkup
+    # Todo: add allure reporting
