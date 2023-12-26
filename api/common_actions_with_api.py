@@ -1,4 +1,5 @@
 import requests
+import logging
 
 
 class CommonActionsWithApi:
@@ -18,11 +19,11 @@ class CommonActionsWithApi:
                 return data
             elif response.status_code == 401:
                 # Unauthorized. The token might be invalid or expired.
-                print('Unauthorized access. Please check your token.')
+                logging.error('Unauthorized access. Please check your token.')
             else:
                 # Other status codes. Handle the error accordingly.
-                print('API request failed with status code:', response.status_code)
-                print('Response content:', response.text)
+                logging.info('API request failed with status code:', response.status_code)
+                logging.info('Response content:', response.text)
 
         except requests.RequestException as e:
-            print('Error occurred while making API request:', e)
+            logging.info('Error occurred while making API request:', e)

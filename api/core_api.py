@@ -1,3 +1,4 @@
+import logging
 import os
 
 from dotenv import load_dotenv
@@ -18,8 +19,8 @@ class CoreApi(CommonActionsWithApi):
         api_url = self.core_url + '/inventories/available'
         response = self._call_api_get_response(api_url, self.headers)
         if len(response) == 0:
-            print('There is no free nodes')
+            logging.info('There is no free nodes')
             return False
         else:
-            print(response)  # for testing
+            logging.info(response)  # for testing
             return True
